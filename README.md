@@ -9,7 +9,7 @@ To run the application i implemented docker and the use of docker compose to mak
 - Run the command ```docker-compose up``` on the root of the project. This would run the ngix proxy, mysql and the app server it self
 - Open anthoer tab in the terminal and exec into the container running the app server using ```docker exec -it <container id> /bin/sh```
 - Once in the container we want to run the migrations to apply the db schema/changes so run ```npx prisma migrate deploy```
-- Here the app should be running smooth on port ```3000``` on your pc so visit ```http://localhost:3000``` to start using the api
+- Here the app should be running smooth on port ```3000``` on your pc so visit ```http://localhost:3000/api-docs``` to start using the api
 - To run the tests - while in the exec'd container run ```npm test``` this should run all the tests on the project
 
 
