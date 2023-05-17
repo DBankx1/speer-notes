@@ -1,0 +1,61 @@
+tags:
+- name: Auth
+  description: Auth API
+
+paths:
+# [POST] signup
+  /api/auth/signup:
+    post:
+      tags:
+      - Auth
+      summary: Signup a user
+      parameters:
+      - name: body
+        in: body
+        description: user Data
+        required: true
+        schema:
+          $ref: '#/definitions/users'
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'User with email already exists'
+
+# [POST] /auth/login
+  /api/auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login user
+      parameters:
+      - name: body
+        in: body
+        description: user Data
+        required: true
+        schema:
+          $ref: '#/definitions/users'
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Invalid credentials'
+
+# definitions
+definitions:
+  users:
+    type: object
+    required:
+        - email
+        - password
+    properties:
+      email:
+        type: string
+        description: user Email
+      password:
+        type: string
+        description: user Password
+
+schemes:
+ - https
+ - http

@@ -24,7 +24,6 @@ export class NoteRoute implements Routes {
     this.router.put(`${this.path}/:id(\\d+)`, [AuthMiddleware(this.authPrismaClient), ValidationMiddleware(CreateOrUpdateNoteDto)], this.noteController.updateUserNote);
     this.router.delete(`${this.path}/:id(\\d+)`, AuthMiddleware(this.authPrismaClient), this.noteController.deleteNote);
     this.router.post(`${this.path}/:id(\\d+)/share`, [AuthMiddleware(this.authPrismaClient), ValidationMiddleware(ShareNoteWithUserDto)], this.noteController.shareNote);
-
     this.router.get(`${this.path}/search`, AuthMiddleware(this.authPrismaClient), this.noteController.searchNotes);
   }
 }

@@ -1,0 +1,211 @@
+tags:
+- name: Notes
+  description: Note API
+
+paths:
+# [GET] /api/notes
+  /api/notes:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - Notes
+      summary: Get all created and shared notes for user
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/notes'
+
+# [POST] /api/notes
+    post:
+      security:
+        - Bearer: []
+      tags:
+      - Notes
+      summary: Create Note for a user
+      parameters:
+      - name: body
+        in: body
+        description: note data
+        required: true
+        schema:
+          type: object
+          properties:
+            body:
+              type: string
+      responses:
+        200:
+          description: 'OK'
+          content: 
+            application/json:
+              schema:
+                  $ref: '#/definitions/notes'                    
+
+# [GET] /api/notes/{id}
+  /api/notes/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - Notes
+      summary: Get all created and shared notes for user
+      parameters:
+      - name: id
+        in: path
+        description: note id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/notes' 
+    #[PUT] /api/notes/{id}             
+    put:
+      security:
+        - Bearer: []
+      tags:
+      - Notes
+      summary: update note for a user
+      parameters:
+      - name: id
+        in: path
+        description: note id
+        required: true
+        type: integer      
+      - name: body
+        in: body
+        description: note data to update
+        required: true
+        schema:
+          type: object
+          properties:
+            body:
+              type: string
+      responses:
+        200:
+          description: 'OK'
+          content: 
+            application/json:
+              schema:
+                  $ref: '#/definitions/notes'
+    #[DELETE] /api/notes/{id}
+    delete:
+      security:
+        - Bearer: []
+      tags:
+      - Notes
+      summary: delete note for a user
+      parameters:
+      - name: id
+        in: path
+        description: note id
+        required: true
+        type: integer      
+      responses:
+        200:
+          description: 'OK'
+
+                     
+
+
+# [GET] /api/notes/search
+  /api/notes/search:
+    get:
+      security:
+        - Bearer: []
+      tags:
+      - Notes
+      summary: Search all user notes
+      parameters:
+        - name: q
+          in: query
+          required: false
+          description: keyword to search for in notes
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/notes'                           
+
+
+# [POST] /api/notes/{id}/share
+  /api/notes/{id}/share:
+    post:
+      security:
+        - Bearer: []
+      tags:
+      - Notes
+      summary: Share note to another user
+      parameters:
+      - name: id
+        in: path
+        description: note id
+        required: true
+        type: integer
+      - name: body
+        in: body
+        description: user id
+        required: true
+        schema:
+          type: object
+          properties:
+            userId:
+              type: integer  
+      responses:
+        200:
+          description: 'OK'
+        404:
+          description: 'Note or user not found'
+        401:
+          description: 'Access denied'    
+                              
+
+# definitions
+definitions:
+  notes:
+    type: object
+    required:
+        - body
+    properties:
+      id:
+        type: integer
+        description: Unique id of the note
+      authorId:
+        type: integer
+        description: User Id who created the note
+      body:
+        type: string
+        description: Message body of the note
+      createdAt:
+        type: date-time
+        description: Date note was created
+      UpdatedAt:
+        type: date-time
+        description: Date note was updated    
+
+schemes:
+ - https
+ - http
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >-
+      Enter the token with the `Bearer: ` prefix, e.g. "Bearer abcde12345". 

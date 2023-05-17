@@ -71,12 +71,12 @@ export class App {
     const options = {
       swaggerDefinition: {
         info: {
-          title: 'REST API',
+          title: 'SPEER NOTES',
           version: '1.0.0',
-          description: 'Example docs',
+          description: 'Api Docs',
         },
       },
-      apis: ['swagger.yaml'],
+      apis: ['swagger/auth.swagger.yaml', 'swagger/notes.swagger.yaml'],
     };
 
     const specs = swaggerJSDoc(options);
